@@ -1,0 +1,45 @@
+1.
+  118  sudo su
+  119  cd
+  120  cat > Pets
+  121  ls
+  122  nano pets
+  123  cat > pack_animals
+  124  ls
+  125  nano pack_animals 
+  126  nano pets 
+  127  nano Pets 
+  128  rm Pets 
+  129  ls
+  130  cat pets pack_animals > new_file
+  131  cat new_file 
+  132  mv new_file mans_friends
+  133  ls -al
+  134  ls
+  135  history 
+2.
+  136  mkdir new_animal_dir
+  137  mv mans_friends new_animal_dir/
+  138  cd new_animal_dir/
+  139  ls
+  140  cd ..
+  141  history 
+3.
+  142  sudo apt update
+  143  sudo wget https://dev.mysql.com/get/mysql-apt-config_0.8.29-1_all.deb
+  144  sudo dpkg -i mysql-apt-config_0.8.29-1_all.deb
+  145  sudo apt update
+  146  sudo apt install mysql-server
+  147  history 
+4.
+  158  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  159  dpkg -i --force-depends google-chrome-stable_current_amd64.deb
+  160  cd ..
+  161  dpkg -S /usr/bin/google-chrome-stable
+  162  dpkg --purge google-chrome-stable
+  163  history 
+
+
+
+
+
