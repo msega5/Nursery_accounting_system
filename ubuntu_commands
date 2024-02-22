@@ -18,3 +18,11 @@
   134  ls
   135  history 
 2.
+  136  mkdir new_animal_dir
+  137  mv mans_friends new_animal_dir/
+  138  cd new_animal_dir/
+  139  ls
+  140  cd ..
+  141  history 
+3.
+
