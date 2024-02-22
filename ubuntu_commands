@@ -25,4 +25,21 @@
   140  cd ..
   141  history 
 3.
+  142  sudo apt update
+  143  sudo wget https://dev.mysql.com/get/mysql-apt-config_0.8.29-1_all.deb
+  144  sudo dpkg -i mysql-apt-config_0.8.29-1_all.deb
+  145  sudo apt update
+  146  sudo apt install mysql-server
+  147  history 
+4.
+  158  wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  159  dpkg -i --force-depends google-chrome-stable_current_amd64.deb
+  160  cd ..
+  161  dpkg -S /usr/bin/google-chrome-stable
+  162  dpkg --purge google-chrome-stable
+  163  history 
+
+
+
+
 
