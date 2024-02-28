@@ -125,3 +125,54 @@ INSERT INTO donkeys (animal_name, birthday, commands, pack_animal_id)
 VALUES ('Ося', '2018-01-01', 'Но, Пошел', 3),
 ('Рой', '2017-01-01', 'Тише, Стой', 3),  
 ('Каратель', '2017-01-01', 'Шагом, Брр', 3); 
+
+# 10. Удалив из таблицы верблюдов, т.к. верблюдов решили перевезти в другой питомник на зимовку, объединить таблицы лошади и ослы в одну таблицу.
+SET SQL_SAFE_UPDATES = 0;
+DELETE FROM camels;
+
+SELECT animal_name, birthday, commands FROM horses
+UNION
+SELECT animal_name, birthday, commands FROM donkeys;
+
+# 11. Создать новую таблицу “молодые животные” в которую попадут все животные старше 1 года, но младше 3 лет и в отдельном столбце с точностью до месяца подсчитать возраст животных в новой таблице.
+CREATE TEMPORARY TABLE temp_animals AS
+SELECT *, 'Лошади' AS animal_type FROM horses
+UNION
+SELECT *, 'Ослы' AS animal_type FROM donkeys
+UNION
+SELECT *, 'Собаки' AS animal_type FROM dogs
+UNION
+SELECT *, 'Кошки' AS animal_type FROM cats
+UNION
+SELECT *, 'Хомяки' AS animal_type FROM humsters;
+
+CREATE TABLE young_animals AS
+SELECT animal_name, birthday, commands, animal_type,
+TIMESTAMPDIFF(MONTH, birthday, CURDATE()) AS age_in_month
+FROM temp_animals WHERE birthday BETWEEN ADDDATE(curdate(), INTERVAL -3 YEAR) AND ADDDATE(CURDATE(), INTERVAL -1 YEAR);
+ 
+# 12. Объединить все таблицы в одну, при этом сохраняя поля, указывающие на прошлую принадлежность к старым таблицам.
+SELECT h.animal_name, h.birthday, h.commands, p.type_animal, y.age_in_month
+FROM horses h
+LEFT JOIN young_animals y ON y.animal_name = h.animal_name
+LEFT JOIN pack_animals p ON p.id = h.pack_animal_id
+UNION 
+SELECT d.animal_name, d.birthday, d.commands, p.type_animal, y.age_in_month
+FROM donkeys d 
+LEFT JOIN young_animals y ON y.animal_name = d.animal_name
+LEFT JOIN pack_animals p ON p.id = d.pack_animal_id
+UNION
+SELECT cats.animal_name, cats.birthday, cats.commands, pets.type_animal, y.age_in_month
+FROM cats
+LEFT JOIN young_animals y ON y.animal_name = cats.animal_name
+LEFT JOIN pets ON pets.id = cats.pet_id
+UNION
+SELECT dogs.animal_name, dogs.birthday, dogs.commands, pets.type_animal, y.age_in_month 
+FROM dogs
+LEFT JOIN young_animals y ON y.animal_name = dogs.animal_name
+LEFT JOIN pets ON pets.id = dogs.pet_id
+UNION
+SELECT hu.animal_name, hu.birthday, hu.commands, pets.type_animal, y.age_in_month 
+FROM humsters hu
+LEFT JOIN young_animals y ON y.animal_name = hu.animal_name
+LEFT JOIN pets ON pets.id = hu.pet_id;
